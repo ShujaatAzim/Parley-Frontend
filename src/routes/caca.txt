@@ -1,0 +1,27 @@
+
+              <div className="row">
+                <div className="col text-center">
+                  <Link to="/profile/:id">Shu Azim</Link>
+                </div>
+                <div className="col text-center">
+                  Nicholas Orochena
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col text-center">
+                  Marcus Orochena
+                </div>
+                <div className="col text-center">
+                  Omar Ayyub
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col text-center">
+                  Jenny Ingram
+                </div>
+                <div className="col text-center">
+                  Joseph Arias
+                </div>
+              </div>
