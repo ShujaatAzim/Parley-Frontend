@@ -5,6 +5,8 @@ import Profile from "./routes/Profile";
 import Login from "./routes/Login";
 import User from "./routes/Users";
 import UserProfile from "./routes/UserProfile"
+import Chats from "./routes/Chats"
+import ChatPage from "./routes/ChatPage";
 
 function AppRouter() {
   return (
@@ -33,6 +35,8 @@ function AppRouter() {
             <Route path="/login/" exact component={Login} />
             <Route path="/users/" exact component={User} />
             <Route path="/users/:id" exact component={UserProfile} />
+            <Route path="/chats/" exact component={Chats} />
+            <Route path="/chats/:id" exact component={ChatPage} />
         </div>
       </div>
     </Router>

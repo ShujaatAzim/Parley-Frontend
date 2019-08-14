@@ -17,26 +17,26 @@ class Home extends React.Component {
 
   render () {
     return (
-      <div className="container">
+      <div className="container border">
         <div className="row">
-          <div className="col-sm">
+          <div className="col-sm border">
             <h5 className="text-center">Popular</h5>
               <div>
                 <ol>
                   {this.state.popularUsers.map(user => (
-                    <li key={user.reputation}><Link to={`/users/${user.id}`}>{user.name}</Link></li>
+                    <li key={`user rep ${user.reputation}`}><Link to={`/users/${user.id}`}>{user.name}</Link></li>
                   ))}
                 </ol>
               </div>
           </div>
 
-          <div className="col-sm">
+          <div className="col-sm align-self-center">
             <div className="text-center">
-            <button>Start</button>
+              <Link to="/chats/"><button>Start</button></Link>
             </div>
           </div>
 
-          <div className="col-sm">
+          <div className="col-sm border">
             <h5 className="text-center">Trending</h5>
               <div>
                 <ul>
