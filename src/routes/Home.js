@@ -20,11 +20,11 @@ class Home extends React.Component {
       <div className="container border">
         <div className="row">
           <div className="col-sm border">
-            <h5 className="text-center">Popular</h5>
+            <h5 className="text-center">Popular Parleyers</h5>
               <div>
-                <ol>
+                <ol className="list-group">
                   {this.state.popularUsers.map(user => (
-                    <li key={`user rep ${user.reputation}`}><Link to={`/users/${user.id}`}>{user.name}</Link></li>
+                    <li key={`user rep ${user.reputation}`} className="list-group-item"><Link to={`/users/${user.id}`}>{user.name}</Link></li>
                   ))}
                 </ol>
               </div>
@@ -32,12 +32,12 @@ class Home extends React.Component {
 
           <div className="col-sm align-self-center">
             <div className="text-center">
-              <Link to="/chats/"><button>Start</button></Link>
+              <Link to="/chats/"><button className="btn btn-primary">Start</button></Link>
             </div>
           </div>
 
           <div className="col-sm border">
-            <h5 className="text-center">Trending</h5>
+            <h5 className="text-center">Trending Topics</h5>
               <div>
                 <ul>
                   <li>Democratic Debates</li><p>Parleys: 20</p>

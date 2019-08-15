@@ -18,9 +18,9 @@ class User extends React.Component {
   render() {
 
     return (
-      <ul>
+      <ul className="list-group">
         {this.state.users.map(user => (
-          <li key={`user ${user.id}`}><Link to={`/users/${user.id}`}>{user.name}</Link></li>
+          <li key={`user ${user.id}`} className="list-group-item"><Link to={`/users/${user.id}`}>{user.name}</Link></li>
         ))}
       </ul>
     )

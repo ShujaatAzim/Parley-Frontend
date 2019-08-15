@@ -46,6 +46,7 @@ class ChatPage extends React.Component {
   submitHandler = (event) => {
     event.preventDefault()
     this.postMessage(this.state.chatInput)
+    event.target.reset()
 }
 
   textChangeHandler = (event) => {
@@ -72,29 +73,34 @@ class ChatPage extends React.Component {
     )  
 
     return (
-      <div className="container border">
-        <div className="row">
-          <div className="col mr-auto p-2 border">
-            <h3>{this.state.currentChat.users[0].name}</h3>
-            <h6>{this.state.currentChat.users[0].location}</h6>
+        <div className="container border overflow-hidden">
+          <div className="row">
+            <div className="col-sm-4 mr-auto p-2 border">
+              <h3>{this.state.currentChat.users[0].name}</h3>
+              <h6>{this.state.currentChat.users[0].location}</h6>
+            </div>
+            <div className="col-sm-4 border text-center">
+              <Link to="/chats/"><button className="btn btn-primary">End Chat</button></Link>
+            </div>
+            <div className="col-sm-4 p-2 border">
+              <h3>{this.state.currentChat.users[1].name}</h3>
+              <h6>{this.state.currentChat.users[1].location}</h6>
+            </div>
           </div>
-          <div className="col-sm-6 border justify-content-center">
-            <Link to="/chats/"><button>End Chat</button></Link>
+
+          <div className="row">
+            <div className="col-md-12 text-center border overflow-auto" style={{ maxHeight: "500px" }}>
+              {messages}
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+              <form className="chat-input" onSubmit={this.submitHandler}>
+                <input className="form-control" onChange={this.textChangeHandler} type="text" placeholder="Write a message..."/>
+                <button type="submit" className="btn btn-primary">Send</button>
+              </form>
+            </div>
           </div>
-          <div className="col p-2 border">
-            <h3>{this.state.currentChat.users[1].name}</h3>
-            <h6>{this.state.currentChat.users[1].location}</h6>
-          </div>
-        </div>
-        <div className="row mh-50">
-          <div className="col"></div>
-          <div className="col align-self-stretch border overflow-auto">
-            {messages}
-            <form className="chat-input" onSubmit={this.submitHandler}>
-              <input onChange={this.textChangeHandler} type="text" placeholder="Write a message..."/><button>Send</button>
-            </form>
-          </div>
-          <div className="col"></div>
         </div>
       </div>
     )

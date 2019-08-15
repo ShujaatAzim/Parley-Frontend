@@ -7,27 +7,20 @@ class Login extends React.Component {
     submitted: false
   }
 
-  usernameChangeHandler(event) {
-    this.setState({ username: event.target.value });
-  }
-  usernameSubmitHandler(event) {
-    event.preventDefault();
-    this.setState({ submitted: true, username: this.state.username });
-  }
-
   render() {
 
     return (
-      <form onSubmit={this.usernameSubmitHandler} className="username-container">
-        <h1>Login</h1>
-        <div>
-          <input
-            type="text"
-            onChange={this.usernameChangeHandler}
-            placeholder="Name"
-            required />
+      <form>
+        <div className="form-group">
+          <label><b>Name</b></label>
+          <input type="email" className="form-control" placeholder="Enter Your Name"/>
+          <small id="emailHelp" className="form-text text-muted">We will <em>never</em> share your email with anyone else.</small>
         </div>
-        <input type="submit" value="Submit" />
+        <div className="form-group">
+          <label><b>Password</b></label>
+          <input type="password" className="form-control" placeholder="Enter Your Password"/>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     )
   }
