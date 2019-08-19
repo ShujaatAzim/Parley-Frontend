@@ -10,10 +10,10 @@ class Login extends React.Component {
   render() {
 
     return (
-      <form>
+      <form style={{ maxWidth: "50%"}}>
         <div className="form-group">
-          <label><b>Name</b></label>
-          <input type="email" className="form-control" placeholder="Enter Your Name"/>
+          <label><b>Email</b></label>
+          <input type="email" className="form-control" placeholder="Enter Your Email"/>
           <small id="emailHelp" className="form-text text-muted">We will <em>never</em> share your email with anyone else.</small>
         </div>
         <div className="form-group">

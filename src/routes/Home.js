@@ -4,15 +4,40 @@ import { Link } from "react-router-dom"
 class Home extends React.Component {
 
   state = {
-    popularUsers: []
+    popularUsers: [],
+    trendingTopics: [],
+    ongoingChats: {}
   }
 
   componentDidMount () {
     fetch('http://localhost:3000/users')
     .then(resp => resp.json())
-    .then(data => this.setState({
-      popularUsers: data.sort((a,b) => b.reputation - a.reputation)
+    .then(users => this.setState({
+      popularUsers: users.sort((a,b) => b.reputation - a.reputation)
     }))
+
+    fetch('http://localhost:3000/topics')
+    .then(resp => resp.json())
+    .then(topics => this.setState({
+      trendingTopics: topics
+    }))
+
+    fetch('http://localhost:3000/chats')
+    .then(resp => resp.json())
+    .then(chats => {
+      let copyOngoing = {...this.state.ongoingChats}
+      chats.forEach(chat => {
+        if (copyOngoing[chat.topic_id]) {
+          copyOngoing[chat.topic_id] += 1
+        } else {
+          copyOngoing[chat.topic_id] = 1
+        }
+      })
+      console.log(copyOngoing)
+      this.setState({
+        ongoingChats: copyOngoing
+      })
+    })
   }
 
   render () {
@@ -24,7 +49,10 @@ class Home extends React.Component {
               <div>
                 <ol className="list-group">
                   {this.state.popularUsers.map(user => (
-                    <li key={`user rep ${user.reputation}`} className="list-group-item"><Link to={`/users/${user.id}`}>{user.name}</Link></li>
+                    <li key={`user rep ${user.reputation}`} className="list-group-item d-flex justify-content-between align-items-center">
+                      <Link to={`/users/${user.id}`}><b>{user.name}</b></Link>
+                      <span className="badge badge-primary badge-pill">Likes: {`${user.reputation}`}</span>
+                    </li>
                   ))}
                 </ol>
               </div>
@@ -39,10 +67,13 @@ class Home extends React.Component {
           <div className="col-sm border">
             <h5 className="text-center">Trending Topics</h5>
               <div>
-                <ul>
-                  <li>Democratic Debates</li><p>Parleys: 20</p>
-                  <li>Gun Control</li><p>Parleys: 17</p>
-                  <li>Abortion</li><p>Parleys: 14</p>
+                <ul className="list-group">
+                  {this.state.trendingTopics.map(topic => (
+                    <li key={`topic id ${topic.id}`} className="list-group-item d-flex justify-content-between align-items-center">
+                      <Link to={`/topic/${topic.id}`}><b>{topic.name}</b></Link>
+                      <span className="badge badge-primary badge-pill">Parleys: {`${this.state.ongoingChats[topic.id]}`}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
           </div>

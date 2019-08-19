@@ -25,6 +25,11 @@ class ChatPage extends React.Component {
         currentChat: currentChat
       })
     })
+    this.scrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
   }
 
   postMessage = (chatInput) => {
@@ -55,7 +60,10 @@ class ChatPage extends React.Component {
     })
   }
   
-  
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({behavior: "smooth"})
+  }
+
   render() {
 
     const dateTime = (created_at) => {
@@ -73,6 +81,7 @@ class ChatPage extends React.Component {
     )  
 
     return (
+
         <div className="container border overflow-hidden">
           <div className="row">
             <div className="col-sm-4 mr-auto p-2 border">
@@ -89,22 +98,27 @@ class ChatPage extends React.Component {
           </div>
 
           <div className="row">
-            <div className="col-md-12 text-center border overflow-auto" style={{ maxHeight: "500px" }}>
+            <div className="col-md-12 text-left border overflow-auto" style={{ height: "400px", maxHeight: "400px" }}>
               {messages}
+              <div ref={(el) => {this.messagesEnd = el; }}></div>
             </div>
+          </div>
 
-            <div className="row">
-              <div className="col-md-12">
+          <div className="row">
+            <div className="col-md-12">
               <form className="chat-input" onSubmit={this.submitHandler}>
-                <input className="form-control" onChange={this.textChangeHandler} type="text" placeholder="Write a message..."/>
-                <button type="submit" className="btn btn-primary">Send</button>
+                <div className="input-group mb-3">
+                  <input className="form-control" onChange={this.textChangeHandler} type="text" placeholder="Write a message..." maxLength="115"/>
+                  <div className="input-group-append">
+                    <button type="submit" className="btn btn-primary">Send</button>
+                  </div>
+                </div>
               </form>
             </div>
           </div>
         </div>
-      </div>
-    )
-  }
+      )
+    }
 }
 
 export default ChatPage
