@@ -10,19 +10,43 @@ class Home extends React.Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:3000/users')
+    if (!localStorage.getItem("access-token")) {
+      return null
+    }
+    fetch('http://localhost:3000/users', {
+      headers: {
+       "access-token": localStorage.getItem('access-token'),
+        uid: localStorage.getItem('uid'),
+        expiry: localStorage.getItem('expiry'),
+        client: localStorage.getItem('client'),
+      }
+    })
     .then(resp => resp.json())
     .then(users => this.setState({
       popularUsers: users.sort((a,b) => b.reputation - a.reputation)
     }))
 
-    fetch('http://localhost:3000/topics')
+    fetch('http://localhost:3000/topics', {
+      headers: {
+        "access-token": localStorage.getItem('access-token'),
+         uid: localStorage.getItem('uid'),
+         expiry: localStorage.getItem('expiry'),
+         client: localStorage.getItem('client'),
+       }
+    })
     .then(resp => resp.json())
     .then(topics => this.setState({
       trendingTopics: topics
     }))
 
-    fetch('http://localhost:3000/chats')
+    fetch('http://localhost:3000/chats', {
+      headers: {
+        "access-token": localStorage.getItem('access-token'),
+         uid: localStorage.getItem('uid'),
+         expiry: localStorage.getItem('expiry'),
+         client: localStorage.getItem('client'),
+       }
+    })
     .then(resp => resp.json())
     .then(chats => {
       let copyOngoing = {...this.state.ongoingChats}
@@ -41,6 +65,11 @@ class Home extends React.Component {
   }
 
   render () {
+    if (!localStorage.getItem("access-token")) {
+      this.props.history.push("/login")
+      return null
+    }
+
     return (
       <div className="container border">
         <div className="row">

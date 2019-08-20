@@ -17,7 +17,17 @@ class ChatPage extends React.Component {
   
 
   componentDidMount() {
-    fetch('http://localhost:3000/chats/')
+    if (!localStorage.getItem("access-token")) {
+      return null
+    }
+    fetch('http://localhost:3000/chats/', {
+      headers: {
+        "access-token": localStorage.getItem('access-token'),
+        uid: localStorage.getItem('uid'),
+        expiry: localStorage.getItem('expiry'),
+        client: localStorage.getItem('client')
+      }
+    })
     .then(resp => resp.json())
     .then(chats => {
       const currentChat = chats.find(chat => chat.id === this.state.params)
@@ -33,19 +43,26 @@ class ChatPage extends React.Component {
   }
 
   postMessage = (chatInput) => {
-    let input = {message: {user_id: this.state.currentChat.users[0].id, chat_id: this.state.currentChat.id, content: chatInput}}
+    let input = {message: {chat_id: this.state.currentChat.id, content: chatInput}}
     fetch(`http://localhost:3000/messages`, {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        "access-token": localStorage.getItem('access-token'),
+        uid: localStorage.getItem('uid'),
+        expiry: localStorage.getItem('expiry'),
+        client: localStorage.getItem('client')
       },
       body: JSON.stringify(input)
     })
     .then(resp => resp.json())
-    .then(message => this.setState({
-      currentChat: {...this.state.currentChat, messages: [...this.state.currentChat.messages, message]}
-    }))
+    .then(message => {
+      console.warn(message);
+
+      this.setState({
+        currentChat: {...this.state.currentChat, messages: [...this.state.currentChat.messages, message]}
+      })
+    })
   }
 
   submitHandler = (event) => {
@@ -66,19 +83,26 @@ class ChatPage extends React.Component {
 
   render() {
 
+    if (!localStorage.getItem("access-token")) {
+      this.props.history.push("/login")
+      return null
+    }
+
     const dateTime = (created_at) => {
       return new Date(created_at).toLocaleString('en-US')
     }
 
     const messages = this.state.currentChat.messages.map(message => {
       const user = this.state.currentChat.users.find(user => user.id === message.user_id)
-        return (
-          <div key={`message ${message.id}`}>
-            <b>{user.name}:</b> <p>{message.content}</p><p>{dateTime(message.created_at)}</p>
-          </div>
-        )
-      }
-    )  
+      
+      if (!user) return <div key={`message ${message.id}`}></div>
+
+      return (
+        <div key={`message ${message.id}`}>
+          <b>{user.name}:</b> <p>{message.content}</p><p>{dateTime(message.created_at)}</p>
+        </div>
+      )
+    })  
 
     return (
 
@@ -89,7 +113,7 @@ class ChatPage extends React.Component {
               <h6>{this.state.currentChat.users[0].location}</h6>
             </div>
             <div className="col-sm-4 border text-center">
-              <Link to="/chats/"><button className="btn btn-primary">End Chat</button></Link>
+              <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
             </div>
             <div className="col-sm-4 p-2 border">
               <h3>{this.state.currentChat.users[1].name}</h3>
@@ -103,7 +127,7 @@ class ChatPage extends React.Component {
               <div ref={(el) => {this.messagesEnd = el; }}></div>
             </div>
           </div>
-
+          {(this.state.currentChat.users[0].uid === localStorage.getItem("uid") || this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
           <div className="row">
             <div className="col-md-12">
               <form className="chat-input" onSubmit={this.submitHandler}>
@@ -116,6 +140,7 @@ class ChatPage extends React.Component {
               </form>
             </div>
           </div>
+          }
         </div>
       )
     }

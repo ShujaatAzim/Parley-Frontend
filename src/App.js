@@ -3,18 +3,35 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import Login from "./routes/Login";
-import User from "./routes/Users";
-import UserProfile from "./routes/UserProfile"
-import Chats from "./routes/Chats"
+import Users from "./routes/Users";
+import UserProfile from "./routes/UserProfile";
+import Chats from "./routes/Chats";
 import ChatPage from "./routes/ChatPage";
+import RegisterPage from "./routes/RegisterPage";
+import Topics from "./routes/Topics";
+
+// import { generateRequireSignInWrapper } from 'redux-token-auth'
+// import { createBrowserHistory } from 'history'
 
 class AppRouter extends React.Component {
 
   state = {
-    loggedInUser: null
+    loggedInUser: localStorage.getItem("uid")
+  }
+
+  logoutUser = () => {
+    localStorage.clear()
   }
 
   render() {
+
+    // const requireSignIn = generateRequireSignInWrapper({
+    //   redirectPathIfNotSignedIn: '/login'
+    // })
+
+    // const history = createBrowserHistory({})
+
+
     return (
       <Router>
         <div className="container">
@@ -33,27 +50,34 @@ class AppRouter extends React.Component {
                     <li className="nav-item">
                       <a className="nav-link" href="/profile/">Profile</a>
                     </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="/login/">Login</a>
-                    </li>
+
                     <li className="nav-item">
                       <a className="nav-link" href="/users/">Users</a>
                     </li>
+
+                    {localStorage.getItem("access-token") && 
+                    <li className="nav-item">
+                      <a className="nav-link" onClick={this.logoutUser} href="/login">Logout</a>
+                    </li>
+                    }
+                    
                   </ul>
                   <form className="form-inline">
                     <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                    <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
                   </form>
                 </div>
 
             </nav>
               <Route path="/" exact component={Home} />
-              <Route path="/profile/" exact render={(props)=>(<Profile {...props} loggedInUser={this.state.loggedInUser}/>)} />
-              <Route path="/login/" exact render={(props)=>(<Login {...props} loggedInUser={this.state.loggedInUser}/>)} />
-              <Route path="/users/" exact render={(props)=>(<User {...props} loggedInUser={this.state.loggedInUser}/>)} />
-              <Route path="/users/:id" exact render={(props)=>(<UserProfile {...props} loggedInUser={this.state.loggedInUser}/>)} />
-              <Route path="/chats/" exact render={(props)=>(<Chats {...props} loggedInUser={this.state.loggedInUser}/>)} />
-              <Route path="/chats/:id" exact render={(props)=>(<ChatPage {...props} loggedInUser={this.state.loggedInUser}/>)} />
+              <Route path="/profile" exact component={Profile} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/users" exact component={Users} />
+              <Route path="/users/:id" exact component={UserProfile} />
+              <Route path="/chats" exact component={Chats} />
+              <Route path="/chats/:id" exact component={ChatPage} />
+              <Route path="/register" exact component={RegisterPage} />
+              <Route path="/topics" exact component={Topics} />
           </div>
         </div>
       </Router>
