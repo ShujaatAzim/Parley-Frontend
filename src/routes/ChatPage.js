@@ -57,8 +57,6 @@ class ChatPage extends React.Component {
     })
     .then(resp => resp.json())
     .then(message => {
-      console.warn(message);
-
       this.setState({
         currentChat: {...this.state.currentChat, messages: [...this.state.currentChat.messages, message]}
       })
@@ -67,9 +65,14 @@ class ChatPage extends React.Component {
 
   submitHandler = (event) => {
     event.preventDefault()
-    this.postMessage(this.state.chatInput)
-    event.target.reset()
-}
+    if (this.state.chatInput !== "") {
+      this.postMessage(this.state.chatInput)
+      event.target.reset()
+      this.setState({
+        chatInput: ""
+      })
+    }
+  }
 
   textChangeHandler = (event) => {
     this.setState({
@@ -104,6 +107,10 @@ class ChatPage extends React.Component {
       )
     })  
 
+    const { chatInput } = this.state
+    const isEnabled = chatInput.length > 0
+
+
     return (
 
         <div className="container border overflow-hidden">
@@ -111,13 +118,17 @@ class ChatPage extends React.Component {
             <div className="col-sm-4 mr-auto p-2 border">
               <h3>{this.state.currentChat.users[0].name}</h3>
               <h6>{this.state.currentChat.users[0].location}</h6>
+              <img alt="" src={`${this.state.currentChat.users[0].image}?size=100x100`}/>
             </div>
+            {(this.state.currentChat.users[0].uid === localStorage.getItem("uid") || this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
             <div className="col-sm-4 border text-center">
               <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
             </div>
+            }
             <div className="col-sm-4 p-2 border">
               <h3>{this.state.currentChat.users[1].name}</h3>
               <h6>{this.state.currentChat.users[1].location}</h6>
+              <img alt="" src={`${this.state.currentChat.users[1].image}?size=100x100`}/>
             </div>
           </div>
 
@@ -134,7 +145,7 @@ class ChatPage extends React.Component {
                 <div className="input-group mb-3">
                   <input className="form-control" onChange={this.textChangeHandler} type="text" placeholder="Write a message..." maxLength="115"/>
                   <div className="input-group-append">
-                    <button type="submit" className="btn btn-primary">Send</button>
+                    <button type="submit" className="btn btn-primary" disabled={!isEnabled}>Send</button>
                   </div>
                 </div>
               </form>

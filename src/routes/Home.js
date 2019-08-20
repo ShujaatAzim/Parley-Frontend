@@ -25,7 +25,7 @@ class Home extends React.Component {
     })
     .then(resp => resp.json())
     .then(users => this.setState({
-      popularUsers: users.sort((a,b) => b.reputation - a.reputation)
+      popularUsers: users.sort((a,b) => b.reputation - a.reputation).slice(0,6)
     }))
 
     fetch('http://localhost:3000/topics', {
@@ -37,9 +37,12 @@ class Home extends React.Component {
        }
     })
     .then(resp => resp.json())
-    .then(topics => this.setState({
-      trendingTopics: topics
-    }))
+    .then(topics => {
+      topics.sort((a,b) => b.chats.length - a.chats.length)
+      this.setState({
+        trendingTopics: topics.slice(0, 6)
+        
+    })})
 
     fetch('http://localhost:3000/chats', {
       headers: {
@@ -59,7 +62,6 @@ class Home extends React.Component {
           copyOngoing[chat.topic_id] = 1
         }
       })
-      console.log(copyOngoing)
       this.setState({
         ongoingChats: copyOngoing
       })

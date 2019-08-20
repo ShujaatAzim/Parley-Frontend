@@ -37,7 +37,8 @@ class Chats extends React.Component {
           {this.state.allChats.map(chat => 
             <li className="list-group-item d-flex justify-content-between align-items-center" 
               key={`chat ${chat.id}`}><Link to={`/chats/${chat.id}`}>
-              Chat - {chat.topic.name} - Participants: {chat.users[0].name} & {chat.users[1].name} </Link>
+              <b>{chat.topic.name}</b></Link> <b><Link to={`/users/${chat.users[0].id}`}>{chat.users[0].name}</Link> & 
+              <Link to={`/users/${chat.users[1].id}`}> {chat.users[1].name}</Link></b>
             </li>
           )}
         </ul>
