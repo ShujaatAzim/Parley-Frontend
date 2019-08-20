@@ -8,6 +8,9 @@ class Topic extends React.Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("access-token")) {
+      return null
+    }
     fetch("http://localhost:3000/topics", {
       headers: {
         "access-token": localStorage.getItem('access-token'),
@@ -22,6 +25,10 @@ class Topic extends React.Component {
     }))
   }
   render() {
+    if (!localStorage.getItem("access-token")) {
+      this.props.history.push("/login")
+      return null
+    }
     return (
       <div>
         <h1>Topics</h1>

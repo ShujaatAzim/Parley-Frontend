@@ -6,6 +6,7 @@ class Profile extends React.Component {
     if (!localStorage.getItem("access-token")) {
       return null
     }
+    
   }
 
   render() {

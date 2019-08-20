@@ -15,10 +15,6 @@ import Topics from "./routes/Topics";
 
 class AppRouter extends React.Component {
 
-  state = {
-    loggedInUser: localStorage.getItem("uid")
-  }
-
   logoutUser = () => {
     localStorage.clear()
   }
@@ -48,11 +44,15 @@ class AppRouter extends React.Component {
                       <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" href="/profile/">Profile</a>
+                      <a className="nav-link" href="/profile">Profile</a>
                     </li>
 
                     <li className="nav-item">
-                      <a className="nav-link" href="/users/">Users</a>
+                      <a className="nav-link" href="/users">Users</a>
+                    </li>
+
+                    <li className="nav-item">
+                      <a className="nav-link" href="/topics">Topics</a>
                     </li>
 
                     {localStorage.getItem("access-token") && 
@@ -60,8 +60,8 @@ class AppRouter extends React.Component {
                       <a className="nav-link" onClick={this.logoutUser} href="/login">Logout</a>
                     </li>
                     }
-                    
                   </ul>
+
                   <form className="form-inline">
                     <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                     <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>

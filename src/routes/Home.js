@@ -6,7 +6,9 @@ class Home extends React.Component {
   state = {
     popularUsers: [],
     trendingTopics: [],
-    ongoingChats: {}
+    ongoingChats: {},
+    currentUser: {},
+    loggedInUser: localStorage.getItem("uid")
   }
 
   componentDidMount () {
@@ -62,6 +64,22 @@ class Home extends React.Component {
         ongoingChats: copyOngoing
       })
     })
+
+    fetch('http://localhost:3000/users', {
+      headers: {
+        "access-token": localStorage.getItem('access-token'),
+        uid: localStorage.getItem('uid'),
+        expiry: localStorage.getItem('expiry'),
+        client: localStorage.getItem('client')
+      }
+    })
+    .then(resp => resp.json())
+    .then(users => {
+      const currentUser = users.find(user => user.email === this.state.loggedInUser)
+      this.setState({
+        currentUser: currentUser
+      })
+    })
   }
 
   render () {
@@ -89,6 +107,7 @@ class Home extends React.Component {
 
           <div className="col-sm align-self-center">
             <div className="text-center">
+            <p><b>Welcome, {this.state.currentUser.name}!</b></p>
               <Link to="/chats/"><button className="btn btn-primary">Start</button></Link>
             </div>
           </div>

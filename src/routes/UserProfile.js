@@ -23,7 +23,7 @@ class UserProfile extends React.Component {
     .then(users => {
       const currentUser = users.find(user => user.id === this.state.params)
       this.setState({
-        currentUser
+        currentUser: currentUser
       })
     })
   }
