@@ -10,21 +10,21 @@ class RegisterPage extends React.Component {
     name: "",
     location: "",
     age: "",
-    picture: "",
+    image: "https://robohash.org/",
     reputation: 0
   }
 
   submitForm = async (event) => {
     event.preventDefault()
     const { registerUser } = this.props
-    const { email, password, name, location, age, picture, reputation } = this.state
+    const { email, password, name, location, age, reputation } = this.state
     try {
-      await registerUser({ email, password, name, location, age, picture, reputation })
-      this.props.history.push("/login")
+      await registerUser({ email, password, name, location, age, image: `https://robohash.org/${email}`, reputation })
+        alert("User created!")
+        this.props.history.push("/login")
     } catch (event) {
-      alert("Invalid fields, please recheck")
+        alert("Invalid fields, please recheck")
     }
-    
   }
 
   onEmailChange = (event) => {
@@ -57,9 +57,9 @@ class RegisterPage extends React.Component {
     })
   }
 
-  onPictureChange = (event) => {
+  onImageChange = (event) => {
     this.setState({
-      picture: event.target.value
+      image: event.target.value
     })
   }
 
@@ -98,8 +98,8 @@ class RegisterPage extends React.Component {
               <input type="age" className="form-control" placeholder="enter your age in years" value={this.state.age} onChange={this.onAgeChange}/>
             </div>
             <div className="col">
-              <label><b><span role="img" aria-label="Picture">📸</span> Picture URL</b></label>
-              <input type="picture" className="form-control" value={`https://robohash.org/${this.state.email}`} onChange={this.onPictureChange}/>
+              <label><b><span role="img" aria-label="Image">📸</span> Image URL</b></label>
+              <input type="imageURL" className="form-control" value={`https://robohash.org/${this.state.email}`} onChange={this.onImageChange} />
             </div>
           </div>
           <br /><br />

@@ -30,11 +30,11 @@ class Login extends React.Component {
       this.props.history.push("/")
     } catch (event) {
       alert("Incorrect email and/or password, please try again.")
+      this.setState({
+        email: "",
+        password: ""
+      })
     }
-    this.setState({
-      email: "",
-      password: ""
-    })
   }
 
   render() {
@@ -44,6 +44,10 @@ class Login extends React.Component {
 
     return (
       <div className="row">
+        <div className="col" style={{ maxWidth: "50%"}}>
+          <h2>Welcome to Parley!</h2>
+          <p>This is some info about Parley.</p>
+        </div>
         <div className="col" style={{ maxWidth: "50%"}}>
           <form>
             <div className="form-group">

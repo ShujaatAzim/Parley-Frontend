@@ -22,6 +22,7 @@ class Profile extends React.Component {
     .then(resp => resp.json())
     .then(users => {
       const currentUser = users.find(user => user.email === this.state.loggedInUser)
+      console.log(currentUser)
       this.setState({
         currentUser: currentUser
       })
@@ -37,7 +38,12 @@ class Profile extends React.Component {
     }
     
     return (
-      <h2>{this.state.currentUser.name}</h2>
+      <div>
+        <h2>{this.state.currentUser.name}</h2>
+        <div>
+        <img src={`${this.state.currentUser.image}`} alt=""/>
+        </div>
+      </div>
     )
   }
 }

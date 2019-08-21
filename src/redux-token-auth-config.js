@@ -6,11 +6,18 @@ const authUrl = 'http://localhost:3000/auth'
 const config = {
   authUrl,
   userAttributes: {
-    firstName: 'first_name',
-    imageUrl: 'image',
+    name: 'name',
+    image: 'image',
+    age: 'age',
+    location: 'location',
+    reputation: 'reputation'
   },
   userRegistrationAttributes: {
-    firstName: 'first_name',
+    name: 'name',
+    image: 'image',
+    age: 'age',
+    location: 'location',
+    reputation: 'reputation'
   },
 }
 

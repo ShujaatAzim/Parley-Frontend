@@ -33,7 +33,14 @@ class UserProfile extends React.Component {
       this.props.history.push("/login")
       return null
     }
-    return <h1>{this.state.currentUser.name}</h1>
+    return (
+      <div>
+      <h2>{this.state.currentUser.name}</h2>
+      <div>
+      <img src={`${this.state.currentUser.image}`} alt=""/>
+      </div>
+    </div>
+    )
   }
 }
 

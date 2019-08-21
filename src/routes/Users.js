@@ -20,9 +20,6 @@ class User extends React.Component {
       }
     })
     .then(resp => resp.json())
-    .then(data => {
-      console.warn(data);
-    })
 
     fetch('http://localhost:3000/users', {
       headers: {
@@ -48,7 +45,7 @@ render() {
       <h1>Users</h1>
         <ul className="list-group" style={{ maxWidth: "33%" }}>
           {this.state.users.map(user => (
-            <li key={`user rep ${user.reputation}`} className="list-group-item d-flex justify-content-between align-items-center">
+            <li key={`user ${user.id}`} className="list-group-item d-flex justify-content-between align-items-center">
               <Link to={`/users/${user.id}`}><b>{user.name}</b></Link>
               <span className="badge badge-primary badge-pill">Likes: {`${user.reputation}`}</span>
             </li>

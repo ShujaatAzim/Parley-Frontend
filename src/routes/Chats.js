@@ -32,7 +32,12 @@ class Chats extends React.Component {
     }
     return (
       <div>
-        <h1>Chats</h1>
+        <h1>Parleys</h1>
+        <div>
+          <button className="btn btn-primary">New Parley!</button>
+        </div>
+        <br />
+        <div>
         <ul className="list-group" style={{ maxWidth: "65%" }}>
           {this.state.allChats.map(chat => 
             <li className="list-group-item d-flex justify-content-between align-items-center" 
@@ -42,6 +47,7 @@ class Chats extends React.Component {
             </li>
           )}
         </ul>
+        </div>
       </div>
     )
   }
