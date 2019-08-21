@@ -34,12 +34,18 @@ class UserProfile extends React.Component {
       return null
     }
     return (
-      <div>
-      <h2>{this.state.currentUser.name}</h2>
-      <div>
-      <img src={`${this.state.currentUser.image}`} alt=""/>
+      <div className="card" style= {{width: "16rem"}}>
+        <img className="card-img-top" src={`${this.state.currentUser.image}?size=200x200`} alt="" />
+        <div className="card-body">
+          <h4 className="card-title"><b>{this.state.currentUser.name}</b></h4>
+          <p className="card-text">Small blurb made by user, eventually.</p>
+        </div>
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item">Location: {this.state.currentUser.location}</li>
+          <li className="list-group-item">Age: {this.state.currentUser.age}</li>
+          <li className="list-group-item">Rep: {this.state.currentUser.reputation}</li>
+        </ul>
       </div>
-    </div>
     )
   }
 }

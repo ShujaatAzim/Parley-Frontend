@@ -41,7 +41,6 @@ class Home extends React.Component {
       topics.sort((a,b) => b.chats.length - a.chats.length)
       this.setState({
         trendingTopics: topics.slice(0, 6)
-        
     })})
 
     fetch('http://localhost:3000/chats', {
@@ -91,9 +90,9 @@ class Home extends React.Component {
     }
 
     return (
-      <div className="container border">
+      <div className="container">
         <div className="row">
-          <div className="col-sm border">
+          <div className="col-sm">
             <h5 className="text-center">Popular Parleyers</h5>
               <div>
                 <ol className="list-group">
@@ -109,12 +108,12 @@ class Home extends React.Component {
 
           <div className="col-sm align-self-center">
             <div className="text-center">
-            <p><b>Welcome, {this.state.currentUser.name}!</b></p>
-              <Link to="/chats/"><button className="btn btn-primary">Start</button></Link>
+            <h4><b>Welcome, {this.state.currentUser.name}!</b></h4>
+              <Link to="/chats/"><button className="btn btn-primary">Parley!</button></Link>
             </div>
           </div>
 
-          <div className="col-sm border">
+          <div className="col-sm">
             <h5 className="text-center">Trending Topics</h5>
               <div>
                 <ul className="list-group">

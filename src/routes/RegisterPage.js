@@ -67,7 +67,7 @@ class RegisterPage extends React.Component {
     const { submitForm } = this
     
     return (
-      <div>
+      <div style={{ maxWidth: "80%"}}>
         <h2>Sign up for Parley!</h2><br />
         <form onSubmit={submitForm}>
           <div className="form-row">

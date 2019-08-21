@@ -47,14 +47,19 @@ class AppRouter extends React.Component {
                       <a className="nav-link" href="/profile">Profile</a>
                     </li>
 
-                    <li className="nav-item">
-                      <a className="nav-link" href="/users">Users</a>
+                    <li className="nav-item dropdown">
+                      <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Other Stuff
+                      </a>
+                      <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a className="dropdown-item" href="/users">Users</a>
+                        <a className="dropdown-item" href="/topics">Topics</a>
+                        <a className="dropdown-item" href="/chats">Chats</a>
+                        <div className="dropdown-divider"></div>
+                        <a className="dropdown-item" href="/">About</a>
+                      </div>
                     </li>
-
-                    <li className="nav-item">
-                      <a className="nav-link" href="/topics">Topics</a>
-                    </li>
-
+                    
                     {localStorage.getItem("access-token") && 
                     <li className="nav-item">
                       <a className="nav-link" onClick={this.logoutUser} href="/login">Logout</a>

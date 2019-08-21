@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 class ChatPage extends React.Component {
-
+  
+  poller = null
   state = {
       currentChat: {
         users: [
@@ -14,13 +15,12 @@ class ChatPage extends React.Component {
       params: parseInt(this.props.match.params.id),
       chatInput: ""
     }
-  
 
-  componentDidMount() {
+  fetchChat() {
     if (!localStorage.getItem("access-token")) {
       return null
     }
-    fetch('http://localhost:3000/chats/', {
+    fetch(`http://localhost:3000/chats/${this.state.params}`, {
       headers: {
         "access-token": localStorage.getItem('access-token'),
         uid: localStorage.getItem('uid'),
@@ -29,12 +29,29 @@ class ChatPage extends React.Component {
       }
     })
     .then(resp => resp.json())
-    .then(chats => {
-      const currentChat = chats.find(chat => chat.id === this.state.params)
+    .then(currentChat => {
       this.setState({
         currentChat: currentChat
       })
     })
+  }
+  
+
+  componentDidMount() {
+    this.fetchChat();
+
+    this.poller = setInterval(() => {
+      this.poll();
+    }, 3000);
+    
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.poller)
+  }
+
+  poll() {
+    this.fetchChat()
     this.scrollToBottom()
   }
 
@@ -113,14 +130,14 @@ class ChatPage extends React.Component {
 
     return (
 
-        <div className="container border overflow-hidden">
+        <div className="container border overflow-auto">
           <div className="row">
             <div className="col-sm-4 mr-auto p-2 border">
               <h3>{this.state.currentChat.users[0].name}</h3>
               <h6>{this.state.currentChat.users[0].location}</h6>
               <img alt="" src={`${this.state.currentChat.users[0].image}?size=100x100`}/>
             </div>
-            {(this.state.currentChat.users[0].uid === localStorage.getItem("uid") || this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
+            {(this.state.currentChat.users[0].uid === localStorage.getItem("uid")||this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
             <div className="col-sm-4 border text-center">
               <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
             </div>
