@@ -93,11 +93,12 @@ class Home extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col-sm">
-            <h5 className="text-center">Popular Parleyers</h5>
+            <h4 className="text-center">Popular Parleyers</h4>
               <div>
                 <ol className="list-group">
                   {this.state.popularUsers.map(user => (
                     <li key={`user rep ${user.reputation}`} className="list-group-item d-flex justify-content-between align-items-center">
+                      <img src={`${user.image}?size=45x45`} alt="" style={{ transform: "rotateY(180deg)"}}/>
                       <Link to={`/users/${user.id}`}><b>{user.name}</b></Link>
                       <span className="badge badge-primary badge-pill">Likes: {`${user.reputation}`}</span>
                     </li>
@@ -106,7 +107,7 @@ class Home extends React.Component {
               </div>
           </div>
 
-          <div className="col-sm align-self-center">
+          <div className="col align-self-center">
             <div className="text-center">
             <h4><b>Welcome, {this.state.currentUser.name}!</b></h4>
               <Link to="/chats/"><button className="btn btn-primary">Parley!</button></Link>
@@ -114,11 +115,11 @@ class Home extends React.Component {
           </div>
 
           <div className="col-sm">
-            <h5 className="text-center">Trending Topics</h5>
+            <h4 className="text-center">Trending Topics</h4>
               <div>
                 <ul className="list-group">
                   {this.state.trendingTopics.map(topic => (
-                    <li key={`topic id ${topic.id}`} className="list-group-item d-flex justify-content-between align-items-center">
+                    <li key={`topic id ${topic.id}`} className="list-group-item d-flex justify-content-between align-items-center" style={{ height: "71px"}}>
                       <Link to={`/topic/${topic.id}`}><b>{topic.name}</b></Link>
                       <span className="badge badge-primary badge-pill">Parleys: {`${this.state.ongoingChats[topic.id]}`}</span>
                     </li>

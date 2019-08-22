@@ -9,6 +9,7 @@ import Chats from "./routes/Chats";
 import ChatPage from "./routes/ChatPage";
 import RegisterPage from "./routes/RegisterPage";
 import Topics from "./routes/Topics";
+import CreateChatPage from "./routes/CreateChatPage";
 
 // import { generateRequireSignInWrapper } from 'redux-token-auth'
 // import { createBrowserHistory } from 'history'
@@ -33,7 +34,7 @@ class AppRouter extends React.Component {
         <div className="container">
           <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-              <a className="navbar-brand" href="/">PARLEY</a>
+              <a className="navbar-brand" href="/" style={{fontFamily: "Luminari", fontSize: "24px"}}>PARLEY</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>
@@ -73,7 +74,7 @@ class AppRouter extends React.Component {
                   </form>
                 </div>
 
-            </nav>
+            </nav><br />
               <Route path="/" exact component={Home} />
               <Route path="/profile" exact component={Profile} />
               <Route path="/login" exact component={Login} />
@@ -83,6 +84,7 @@ class AppRouter extends React.Component {
               <Route path="/chats/:id" exact component={ChatPage} />
               <Route path="/register" exact component={RegisterPage} />
               <Route path="/topics" exact component={Topics} />
+              <Route path="/createchat" exact component={CreateChatPage} />
           </div>
         </div>
       </Router>

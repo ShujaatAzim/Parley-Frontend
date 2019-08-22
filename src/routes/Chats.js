@@ -35,8 +35,8 @@ class Chats extends React.Component {
         <div className="row">
           <h1>Parleys</h1>
         </div>
-        <div class>
-          <button className="btn btn-primary">New Parley!</button>
+        <div>
+          <Link to="/createchat"><button className="btn btn-primary">New Parley</button></Link>
         </div>
         <br />
         <div className="row">

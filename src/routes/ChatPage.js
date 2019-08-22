@@ -11,6 +11,7 @@ class ChatPage extends React.Component {
           {}
         ],
         messages: [],
+        topic: {}
       },
       params: parseInt(this.props.match.params.id),
       chatInput: ""
@@ -118,8 +119,14 @@ class ChatPage extends React.Component {
       if (!user) return <div key={`message ${message.id}`}></div>
 
       return (
-        <div key={`message ${message.id}`}>
-          <b>{user.name}:</b> <p>{message.content}</p><p>{dateTime(message.created_at)}</p>
+        <div key={`message ${message.id}`} style={{ fontSize: "20px"}}>
+          <img src={`${user.image}?size=25x25`} alt="" style={{ transform: "rotateY(180deg)"}}/>
+          <div style={{ color: "#B58900" }}>
+            <b><em>{user.name}</em></b>
+          </div>
+          <div>
+            <p>{message.content}</p><p>{dateTime(message.created_at)}</p>
+          </div>
         </div>
       )
     })  
@@ -132,17 +139,20 @@ class ChatPage extends React.Component {
 
         <div className="container border overflow-auto">
           <div className="row">
-            <div className="col-sm-4 mr-auto p-2 border">
+            <div className="col mr-auto p-2 border">
               <h3>{this.state.currentChat.users[0].name}</h3>
               <h6>{this.state.currentChat.users[0].location}</h6>
-              <img alt="" src={`${this.state.currentChat.users[0].image}?size=100x100`}/>
+              <img alt="" src={`${this.state.currentChat.users[0].image}?size=100x100`} style={{ transform: "rotateY(180deg)"}}/>
             </div>
             {(this.state.currentChat.users[0].uid === localStorage.getItem("uid")||this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
-            <div className="col-sm-4 border text-center">
-              <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
+            <div className="col align-self-center">
+              <div className="text-center">
+                <h4>{this.state.currentChat.topic.name}</h4>
+                <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
+              </div>
             </div>
             }
-            <div className="col-sm-4 p-2 border">
+            <div className="col p-2 border text-right">
               <h3>{this.state.currentChat.users[1].name}</h3>
               <h6>{this.state.currentChat.users[1].location}</h6>
               <img alt="" src={`${this.state.currentChat.users[1].image}?size=100x100`}/>
