@@ -119,13 +119,13 @@ class ChatPage extends React.Component {
       if (!user) return <div key={`message ${message.id}`}></div>
 
       return (
-        <div key={`message ${message.id}`} style={{ fontSize: "20px"}}>
-          <img src={`${user.image}?size=25x25`} alt="" style={{ transform: "rotateY(180deg)"}}/>
-          <div style={{ color: "#B58900" }}>
-            <b><em>{user.name}</em></b>
+        <div key={`message ${message.id}`}>
+          <div style={{ color: "#B58900", fontSize: "20px" }}>
+            <img src={`${user.image}?size=35x35`} alt="" style={{ transform: "rotateY(180deg)"}}/>
+            <b>{user.name}</b> <span style={{ fontSize: "10px"}}><em>{dateTime(message.created_at)}</em></span>
           </div>
-          <div>
-            <p>{message.content}</p><p>{dateTime(message.created_at)}</p>
+          <div style={{ padding: "0px 0px 0px 40px"}}>
+            <p>{message.content}</p>
           </div>
         </div>
       )
@@ -137,30 +137,32 @@ class ChatPage extends React.Component {
 
     return (
 
-        <div className="container border overflow-auto">
-          <div className="row">
-            <div className="col mr-auto p-2 border">
-              <h3>{this.state.currentChat.users[0].name}</h3>
-              <h6>{this.state.currentChat.users[0].location}</h6>
-              <img alt="" src={`${this.state.currentChat.users[0].image}?size=100x100`} style={{ transform: "rotateY(180deg)"}}/>
+        <div className="container overflow-auto">
+          <div className="row border">
+            <div className="col text-center border-right mr-auto p-2">
+              <h3>{this.state.currentChat.users[1].name}</h3>
+              <h6>{this.state.currentChat.users[1].location}</h6>
+              <img alt="" src={`${this.state.currentChat.users[1].image}?size=100x100`} style={{ transform: "rotateY(180deg)"}}/>
             </div>
+            
             {(this.state.currentChat.users[0].uid === localStorage.getItem("uid")||this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
             <div className="col align-self-center">
               <div className="text-center">
-                <h4>{this.state.currentChat.topic.name}</h4>
+                <h4><b>{this.state.currentChat.topic.name}</b></h4>
                 <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
               </div>
             </div>
             }
-            <div className="col p-2 border text-right">
-              <h3>{this.state.currentChat.users[1].name}</h3>
-              <h6>{this.state.currentChat.users[1].location}</h6>
-              <img alt="" src={`${this.state.currentChat.users[1].image}?size=100x100`}/>
+            
+            <div className="col text-center p-2 border-left text-right">
+              <h3>{this.state.currentChat.users[0].name}</h3>
+              <h6>{this.state.currentChat.users[0].location}</h6>
+              <img alt="" src={`${this.state.currentChat.users[0].image}?size=100x100`}/>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-md-12 text-left border overflow-auto" style={{ height: "400px", maxHeight: "400px" }}>
+            <div className="col-md-12 text-left border overflow-auto" style={{ height: "400px", maxHeight: "400px", maxWidth: "100%", wordWrap: "break-word", padding: "0px 50px 0px 20px" }}>
               {messages}
               <div ref={(el) => {this.messagesEnd = el; }}></div>
             </div>
@@ -170,7 +172,7 @@ class ChatPage extends React.Component {
             <div className="col-md-12">
               <form className="chat-input" onSubmit={this.submitHandler}>
                 <div className="input-group mb-3">
-                  <input className="form-control" onChange={this.textChangeHandler} type="text" placeholder="Write a message..." maxLength="115"/>
+                  <input className="form-control" onChange={this.textChangeHandler} type="text" placeholder="Write a message..." />
                   <div className="input-group-append">
                     <button type="submit" className="btn btn-primary" disabled={!isEnabled}>Send</button>
                   </div>
