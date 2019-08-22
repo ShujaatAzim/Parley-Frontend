@@ -37,7 +37,7 @@ class Home extends React.Component {
        }
     })
     .then(resp => resp.json())
-    .then(topics => {
+    .then(topics => {      
       topics.sort((a,b) => b.chats.length - a.chats.length)
       this.setState({
         trendingTopics: topics.slice(0, 6)
@@ -121,7 +121,7 @@ class Home extends React.Component {
                   {this.state.trendingTopics.map(topic => (
                     <li key={`topic id ${topic.id}`} className="list-group-item d-flex justify-content-between align-items-center" style={{ height: "71px"}}>
                       <Link to={`/topic/${topic.id}`}><b>{topic.name}</b></Link>
-                      <span className="badge badge-primary badge-pill">Parleys: {`${this.state.ongoingChats[topic.id]}`}</span>
+                      <span className="badge badge-primary badge-pill">Parleys: {`${this.state.ongoingChats[topic.id] || 0}`}</span>
                     </li>
                   ))}
                 </ul>

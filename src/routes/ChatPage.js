@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 class ChatPage extends React.Component {
   
@@ -11,7 +10,8 @@ class ChatPage extends React.Component {
           {}
         ],
         messages: [],
-        topic: {}
+        topic: {},
+        inactive: false
       },
       params: parseInt(this.props.match.params.id),
       chatInput: ""
@@ -81,6 +81,27 @@ class ChatPage extends React.Component {
     })
   }
 
+  endChat() {
+    let input = {chat: {inactive: true}}
+
+    fetch(`http://localhost:3000/chats/${this.state.params}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "access-token": localStorage.getItem('access-token'),
+        uid: localStorage.getItem('uid'),
+        expiry: localStorage.getItem('expiry'),
+        client: localStorage.getItem('client')
+      },
+      method: "PATCH",
+      body: JSON.stringify(input)
+    }).then(() => this.setState({
+      currentChat: {
+        ...this.state.currentChat,
+        inactive: true
+      }
+    }))
+  }
+
   submitHandler = (event) => {
     event.preventDefault()
     if (this.state.chatInput !== "") {
@@ -145,11 +166,18 @@ class ChatPage extends React.Component {
               <img alt="" src={`${this.state.currentChat.users[1].image}?size=100x100`} style={{ transform: "rotateY(180deg)"}}/>
             </div>
             
-            {(this.state.currentChat.users[0].uid === localStorage.getItem("uid")||this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
+            { this.state.currentChat.inactive ? 
+            <div className="col align-self-center">
+            <div className="text-center">
+              <h4><b>{this.state.currentChat.topic.name}</b></h4>
+              <h3>Chat Closed</h3>
+              </div>
+              </div>
+            : (this.state.currentChat.users[0].uid === localStorage.getItem("uid")||this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
             <div className="col align-self-center">
               <div className="text-center">
                 <h4><b>{this.state.currentChat.topic.name}</b></h4>
-                <Link to="/chats/"><button className="btn btn-danger">End Chat</button></Link>
+                <button className="btn btn-danger" onClick={() => this.endChat()}>End Chat</button>
               </div>
             </div>
             }
@@ -167,7 +195,11 @@ class ChatPage extends React.Component {
               <div ref={(el) => {this.messagesEnd = el; }}></div>
             </div>
           </div>
-          {(this.state.currentChat.users[0].uid === localStorage.getItem("uid") || this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
+
+          { this.state.currentChat.inactive ? 
+            <div />
+            :
+          (this.state.currentChat.users[0].uid === localStorage.getItem("uid") || this.state.currentChat.users[1].uid === localStorage.getItem("uid")) &&
           <div className="row">
             <div className="col-md-12">
               <form className="chat-input" onSubmit={this.submitHandler}>
