@@ -28,12 +28,17 @@ class Login extends React.Component {
     const { email, password } = this.state
     try {
       await signInUser({ email, password })
+      swal({
+        text: "Success!",
+        icon: "success",
+        button: "Got it!"
+      })
       this.props.history.push("/home")
     } catch (event) {
       swal({
         text: "Incorrect email and/or password, please try again.",
         icon: "error",
-        button: "Ok"
+        button: "Got it!"
       })
       this.setState({
         email: "",

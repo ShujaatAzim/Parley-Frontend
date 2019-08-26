@@ -43,7 +43,7 @@ class ChatPage extends React.Component {
 
     this.poller = setInterval(() => {
       this.poll();
-    }, 1000);
+    }, 2000);
     
   }
 
