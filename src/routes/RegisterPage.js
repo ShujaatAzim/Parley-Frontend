@@ -1,6 +1,7 @@
 import React from 'react' 
 import { registerUser } from '../redux-token-auth-config'
 import { connect } from 'react-redux'
+import swal from 'sweetalert'
 
 class RegisterPage extends React.Component {
 
@@ -20,10 +21,18 @@ class RegisterPage extends React.Component {
     const { email, password, name, location, age, reputation } = this.state
     try {
       await registerUser({ email, password, name, location, age, image: `https://robohash.org/${email}`, reputation })
-        alert("User created!")
-        this.props.history.push("/login")
+      swal({
+        text: "Successfully created user!",
+        icon: "success",
+        button: "Ok"
+      })
+      this.props.history.push("/login")
     } catch (event) {
-        alert("Invalid fields, please recheck")
+      swal({
+        text: "Invalid fields, please try again :(",
+        icon: "error",
+        button: "Ok"
+      })
     }
   }
 

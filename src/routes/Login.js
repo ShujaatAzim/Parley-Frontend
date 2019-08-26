@@ -2,6 +2,7 @@ import React from "react";
 import { signInUser } from "../redux-token-auth-config"
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import swal from 'sweetalert'
 
 class Login extends React.Component {
   state = {
@@ -27,9 +28,13 @@ class Login extends React.Component {
     const { email, password } = this.state
     try {
       await signInUser({ email, password })
-      this.props.history.push("/")
+      this.props.history.push("/home")
     } catch (event) {
-      alert("Incorrect email and/or password, please try again.")
+      swal({
+        text: "Incorrect email and/or password, please try again.",
+        icon: "error",
+        button: "Ok"
+      })
       this.setState({
         email: "",
         password: ""

@@ -10,6 +10,8 @@ import ChatPage from "./routes/ChatPage";
 import RegisterPage from "./routes/RegisterPage";
 import Topics from "./routes/Topics";
 import CreateChatPage from "./routes/CreateChatPage";
+import LandingPage from "./routes/LandingPage";
+import About from "./routes/About";
 
 // import { generateRequireSignInWrapper } from 'redux-token-auth'
 // import { createBrowserHistory } from 'history'
@@ -34,7 +36,7 @@ class AppRouter extends React.Component {
         <div className="container">
           <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-              <a className="navbar-brand" href="/" style={{fontFamily: "Luminari", fontSize: "24px"}}>PARLEY</a>
+              <a className="navbar-brand" href="/home" style={{fontFamily: "Luminari", fontSize: "24px"}}>Parley</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>
@@ -42,7 +44,7 @@ class AppRouter extends React.Component {
                 <div className="collapse navbar-collapse" id="navbarColor01">
                   <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                      <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
+                      <a className="nav-link" href="/home">Home <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item">
                       <a className="nav-link" href="/profile">Profile</a>
@@ -57,7 +59,7 @@ class AppRouter extends React.Component {
                         <a className="dropdown-item" href="/topics">Topics</a>
                         <a className="dropdown-item" href="/chats">Chats</a>
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="/">About</a>
+                        <a className="dropdown-item" href="/about">About</a>
                       </div>
                     </li>
                     
@@ -75,7 +77,8 @@ class AppRouter extends React.Component {
                 </div>
 
             </nav><br />
-              <Route path="/" exact component={Home} />
+              <Route path="/" exact component={LandingPage} />
+              <Route path="/home" exact component={Home} />
               <Route path="/profile" exact component={Profile} />
               <Route path="/login" exact component={Login} />
               <Route path="/users" exact component={Users} />
@@ -85,6 +88,7 @@ class AppRouter extends React.Component {
               <Route path="/register" exact component={RegisterPage} />
               <Route path="/topics" exact component={Topics} />
               <Route path="/createchat" exact component={CreateChatPage} />
+              <Route path="/about" exact component={About} />
           </div>
         </div>
       </Router>
