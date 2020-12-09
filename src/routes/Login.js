@@ -56,7 +56,11 @@ class Login extends React.Component {
       <div className="row">
         <div className="col" style={{ maxWidth: "50%"}}>
           <h2>Welcome to Parley!</h2>
-          <p>This is some info about Parley.</p>
+          <p>
+            Defined as "a conference between opposing sides in a dispute, especially a discussion of terms for an armistice", Parley serves to 
+            connect those who are curious with those who are willing. The weapons need not be bared before a parley is initiated - similarly,
+            a topic need not be world-shatteringly important before a discussion about it is initiated. 
+          </p>
         </div>
         <div className="col" style={{ maxWidth: "50%"}}>
           <form>
